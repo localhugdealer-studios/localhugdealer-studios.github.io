@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05050a">
+  <meta name="description" content="Enemy No. 1 is an action roguelite where your number is your health, your size and your weapon. Math is out to get you.">
+  <title>Enemy No. 1 | LocalHugDealer Studios</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Enemy No. 1">
+  <meta property="og:description" content="An action roguelite where your number is your health, your size and your weapon. Math is out to get you.">
+  <meta property="og:image" content="images/key-art.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="images/icon.png">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <style>
+    /* Look and palette come from the game's brand guide, not the studio palette. */
+    @font-face {
+      font-family: "Rubik Mono One";
+      src: url("font/RubikMonoOne-Regular.ttf") format("truetype");
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Chakra Petch";
+      src: url("font/ChakraPetch-SemiBold.ttf") format("truetype");
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Chakra Petch";
+      src: url("font/ChakraPetch-Bold.ttf") format("truetype");
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "IBM Plex Mono";
+      src: url("font/IBMPlexMono-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    /* base.css already declares the regular weight. */
+    @font-face {
+      font-family: "Silkscreen";
+      src: url("font/Silkscreen-Bold.ttf") format("truetype");
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    :root {
+      --void: #05050a;
+      --floor: #0d0d11;
+      --lit: #12131a;
+      --bulkhead: #2a3140;
+      --grey: #6f7886;
+      --chalk: #e8eef7;
+      --cabinet: #00e676;
+      --cyan: #00e5ff;
+      --joystick: #ff3d00;
+      --orange: #ff9100;
+      --score: #ffea00;
+
+      --display: "Rubik Mono One", "Arial Black", Impact, sans-serif;
+      --subhead: "Chakra Petch", "Bahnschrift", sans-serif;
+      --pixel: "Silkscreen", "Courier New", monospace;
+      --body: "IBM Plex Mono", Consolas, "Courier New", monospace;
+    }
+
+    body {
+      background: var(--void);
+      color: var(--chalk);
+      font-family: var(--body);
+    }
+
+    /* CRT scanlines, kept under 3 percent. */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(232, 238, 247, 0.025) 3px 4px);
+    }
+
+    .shell {
+      width: min(72rem, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    .kicker {
+      margin: 0 0 1rem;
+      color: var(--cabinet);
+      font: 700 16px/1 var(--pixel);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .sub {
+      margin: 0;
+      font: 700 clamp(1.1rem, 2.4vw, 2.1rem)/1.15 var(--subhead);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* Top bar */
+    .topbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+    }
+
+    .topbar .shell {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+      font: 600 0.85rem/1 var(--subhead);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .topbar a {
+      color: var(--grey);
+      text-decoration: none;
+    }
+
+    .topbar a:hover {
+      color: var(--cabinet);
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: min(100vh, 60rem);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(0, 230, 118, 0.25);
+      isolation: isolate;
+    }
+
+    .hero-art {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 70% center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(5, 5, 10, 0.95) 0%, rgba(5, 5, 10, 0.7) 38%, transparent 70%),
+        linear-gradient(0deg, var(--void), transparent 30%);
+    }
+
+    .hero h1 {
+      margin: 0 0 1.5rem;
+      font: 400 clamp(3.25rem, 9vw, 8.5rem)/0.9 var(--display);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      text-shadow: 0 0.3rem 2rem rgba(5, 5, 10, 0.9);
+      /* The monospaced space is a full cell wide; pull the 1 in toward NO. */
+      word-spacing: -0.5em;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+      text-shadow: 0 0 1.5rem rgba(255, 145, 0, 0.45);
+    }
+
+    .hero .sub {
+      color: var(--score);
+    }
+
+    .coming-soon {
+      margin: 2.5rem 0 0;
+      color: var(--cabinet);
+      font: 700 16px/1 var(--pixel);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .coming-soon::before {
+      content: "\25A0\00A0";
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 0 0;
+    }
+
+    section h2 {
+      margin: 0 0 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 230, 118, 0.2);
+      color: var(--cabinet);
+      font: 600 clamp(1.6rem, 4vw, 2.6rem)/1.1 var(--subhead);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .pitch p {
+      max-width: 44rem;
+      margin: 0 0 1.25rem;
+      font-size: 1.1rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 2rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .chips li {
+      padding: 0.6rem 0.8rem;
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      background: rgba(0, 229, 255, 0.06);
+      color: var(--cyan);
+      font: 600 0.95rem/1 var(--subhead);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .panel {
+      margin: 0;
+      border: 1px solid rgba(232, 238, 247, 0.1);
+      background: var(--lit);
+    }
+
+    .panel img,
+    .panel video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .panel figcaption {
+      padding: 1rem 1.25rem;
+      color: var(--chalk);
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 1.25rem;
+    }
+
+    .feature {
+      padding: 1.75rem;
+      border: 1px solid rgba(232, 238, 247, 0.1);
+      border-left: 3px solid var(--joystick);
+      background: var(--lit);
+    }
+
+    .feature h3 {
+      margin: 0 0 0.75rem;
+      color: var(--chalk);
+      font: 700 1.2rem/1.2 var(--subhead);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--chalk);
+    }
+
+    footer {
+      margin-top: 6rem;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(0, 230, 118, 0.2);
+      color: var(--grey);
+      font-size: 0.9rem;
+    }
+
+    footer .shell {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    footer a:hover {
+      color: var(--cabinet);
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        align-items: flex-end;
+        padding-bottom: 3rem;
+      }
+
+      .hero::before {
+        background: linear-gradient(0deg, var(--void) 10%, rgba(5, 5, 10, 0.6) 60%, rgba(5, 5, 10, 0.2));
+      }
+
+      .grid,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="topbar">
+      <div class="shell">
+        <a href="../../index.html">&lsaquo; LocalHugDealer Studios</a>
+        <a href="#gameplay">Gameplay</a>
+      </div>
+    </div>
+
+    <img class="hero-art" src="images/key-art.jpg" alt="A small cyan number faces a red swarm of corrupt numbers pouring out of the burning Numero Uno starburst">
+
+    <div class="shell">
+      <p class="kicker">Action roguelite / In development</p>
+      <h1>Enemy<br>No. <span>1</span></h1>
+      <p class="sub">Math is out to get you</p>
+      <p class="coming-soon">Steam page coming soon</p>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="pitch" id="about">
+      <p class="kicker">01 / The game</p>
+      <h2>Prepare to be outnumbered</h2>
+      <p>Enemy No. 1 is an action roguelite where your number is your health, your size and your weapon. Collect smaller numbers to grow, split to survive, and restore balance to the number line.</p>
+      <p>Inspired by:</p>
+      <ul class="chips">
+        <li>Risk of Rain</li>
+        <li>Brotato</li>
+        <li>Vampire Survivors</li>
+        <li>Agar.io</li>
+      </ul>
+    </section>
+
+    <section id="story">
+      <p class="kicker">02 / The story</p>
+      <h2>Carry the 1 and die</h2>
+      <div class="grid">
+        <figure class="panel">
+          <img src="images/story-1.jpg" alt="Zero and One balanced on either end of a green number line" loading="lazy">
+          <figcaption>The number line was balanced. Zero on one side, One on the other.</figcaption>
+        </figure>
+        <figure class="panel">
+          <img src="images/story-2.jpg" alt="One bursts into flame and tips the number line" loading="lazy">
+          <figcaption>Then One decided it should be the only number that counts.</figcaption>
+        </figure>
+        <figure class="panel">
+          <img src="images/story-3.jpg" alt="Zero trapped inside a red swarm of corrupt numbers" loading="lazy">
+          <figcaption>Zero was taken, and every number One touched turned corrupt.</figcaption>
+        </figure>
+        <figure class="panel">
+          <img src="images/story-4.jpg" alt="The cyan player races toward the red swarm" loading="lazy">
+          <figcaption>You are what is left. Restore the balance.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="features">
+      <p class="kicker">03 / The rules</p>
+      <h2>Show your working. Then run</h2>
+      <div class="grid">
+        <article class="feature">
+          <h3>Never carry a 1</h3>
+          <p>Your number is your health, your size and your weapon. Pick up a 1 and you go corrupt.</p>
+        </article>
+        <article class="feature">
+          <h3>Square Rootcket</h3>
+          <p>Square root an enemy and it fights for you.</p>
+        </article>
+        <article class="feature">
+          <h3>Divide to survive</h3>
+          <p>Split into smaller numbers when the swarm closes in.</p>
+        </article>
+        <article class="feature">
+          <h3>No calculators</h3>
+          <p>Pick weapons, stack upgrades and survive waves that outnumber you. Literally.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="gameplay">
+      <p class="kicker">04 / Gameplay</p>
+      <h2>Square root your problems</h2>
+      <div class="grid">
+        <figure class="panel">
+          <video src="gifs/gameplay-1.mp4" poster="images/gameplay-1-poster.jpg" controls autoplay muted loop playsinline preload="metadata" aria-label="Gameplay clip: the player fights a swarm of numbered enemies"></video>
+        </figure>
+        <figure class="panel">
+          <video src="gifs/gameplay-2.mp4" poster="images/gameplay-2-poster.jpg" controls autoplay muted loop playsinline preload="metadata" aria-label="Gameplay clip: the player dodges and fires through a wave"></video>
+        </figure>
+      </div>
+      <div class="grid grid-3">
+        <figure class="panel"><img src="images/screenshot-1.jpg" alt="Gameplay screenshot with green allies fighting red enemies" loading="lazy"></figure>
+        <figure class="panel"><img src="images/screenshot-2.jpg" alt="Gameplay screenshot of the player surrounded by numbered enemies" loading="lazy"></figure>
+        <figure class="panel"><img src="images/screenshot-3.jpg" alt="Gameplay screenshot of a crowded wave" loading="lazy"></figure>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <span>&copy; 2026 LocalHugDealer Studios</span>
+      <a href="../../index.html">More from LocalHugDealer Studios</a>
+    </div>
+  </footer>
+  <script>
+    // Respect reduced motion: hold the gameplay clips on their poster frames.
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll("video").forEach((v) => { v.removeAttribute("autoplay"); v.pause(); });
+    }
+  </script>
+</body>
+</html>

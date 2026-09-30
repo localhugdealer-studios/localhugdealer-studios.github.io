@@ -135,13 +135,11 @@
     }
 
     .polaroid-art {
-      display: grid;
-      place-items: center;
+      width: 100%;
       aspect-ratio: 16 / 9;
+      object-fit: cover;
       border-radius: 0.75rem;
       background: var(--ink);
-      color: var(--yellow);
-      font-size: clamp(1.75rem, 4vw, 3rem);
     }
 
     .polaroid h3 {
@@ -212,12 +210,12 @@
   <main>
     <section id="games">
       <h2>Our games</h2>
-      <a class="polaroid" href="games/enemy-no-1/">
-        <div class="polaroid-art pixel">Enemy No. 1</div>
+      <a class="polaroid" href="games/enemy-no-1/index.html">
+        <img class="polaroid-art" src="games/enemy-no-1/images/key-art.jpg" alt="Enemy No. 1 key art">
         <div>
           <span class="tag">In development</span>
           <h3>Enemy No. 1</h3>
-          <p>A short pitch for Enemy No. 1 goes here.</p>
+          <p>An action roguelite where your number is your health, your size and your weapon. Math is out to get you.</p>
         </div>
       </a>
     </section>
