@@ -1,0 +1,102 @@
+/* Shared site chrome: palette, fonts, resets. Every page links this first. */
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Silkscreen";
+  src: url("../../games/enemy-no-1/font/Silkscreen-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+:root {
+  /* Brand palette (assets/colours/colour_palette.png), plus white by request. */
+  --white: #FFFFFF;
+  --green: #328464;
+  --green-dark: #23674E;
+  --green-deep: #24523B;
+  --green-bright: #14A02E;
+  --mint: #5DAF8D;
+  --cream: #F4D29C;
+  --tan: #DBA463;
+  --amber: #F9A31B;
+  --yellow: #FFD541;
+  --red: #B4202A;
+  --lavender: #8B93AF;
+  --slate: #6D758D;
+  --ink: #333941;
+
+  --font: "Montserrat", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.8em 1.6em;
+  border: 3px solid var(--green-deep);
+  border-radius: 999px;
+  background: var(--green);
+  color: var(--white);
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 5px 0 var(--green-deep);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 var(--green-deep);
+}
+
+.pixel {
+  font-family: "Silkscreen", monospace;
+}
+
+.cloud {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes drift {
+  from { transform: translateX(-12vw); }
+  to { transform: translateX(112vw); }
+}
+
+@keyframes bob {
+  50% { transform: translateY(-12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+  }
+}

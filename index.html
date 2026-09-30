@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LocalHugDealer Studios</title>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <style>
+    /* Variant D: C's nav, headline and game card on B's green hero, which fades into a cloud bank. */
+    body {
+      overflow-x: hidden;
+    }
+
+    .hero {
+      position: relative;
+      background: linear-gradient(180deg, var(--green) 25%, var(--mint) 100%);
+      color: var(--white);
+      padding-bottom: calc(16vw + 2rem);
+    }
+
+    /* Faint clouds drifting behind the hero content. */
+    .sky {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .sky .cloud {
+      left: 0;
+      opacity: 0.3;
+      animation: drift linear infinite;
+    }
+
+    nav,
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 72rem;
+      margin: 0 auto;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem 2rem;
+      font-weight: 900;
+    }
+
+    nav img {
+      width: 3rem;
+      border: 3px solid var(--white);
+      border-radius: 50%;
+    }
+
+    nav a {
+      margin-left: auto;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: var(--cream);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 2rem 0;
+    }
+
+    .hero h1 {
+      margin: 0 0 1.5rem;
+      font-size: clamp(2.75rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--cream);
+    }
+
+    .hero p {
+      margin: 0 0 2rem;
+      font-size: 1.2rem;
+      max-width: 30rem;
+    }
+
+    .hero .btn {
+      background: var(--amber);
+      color: var(--ink);
+    }
+
+    .hero-logo {
+      animation: bob 6s ease-in-out infinite;
+    }
+
+    /* Cloud banks straddling the bottom edge of the hero. The back row sits higher and is softer. */
+    .bank {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      transform: translateY(-50%);
+    }
+
+    .bank .cloud {
+      position: static;
+      flex: 1 1 0;
+      min-width: 0;
+      margin: 0 -4%;
+    }
+
+    .bank .cloud:nth-child(even) {
+      transform: scaleX(-1) scale(0.85);
+    }
+
+    .bank.back {
+      transform: translateY(-95%);
+      opacity: 0.6;
+    }
+
+    .bank.back .cloud {
+      margin: 0 -6%;
+    }
+
+    section {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    h2 {
+      margin: 0 0 2.5rem;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    #games {
+      padding-top: calc(8vw + 3rem);
+    }
+
+    .polaroid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 1.25rem;
+      color: var(--ink);
+      border: 5px solid var(--green-deep);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 0 var(--green-deep);
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .polaroid:hover {
+      transform: rotate(-1.5deg) translateY(-4px) scale(1.01);
+    }
+
+    .polaroid-art {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 16 / 9;
+      border-radius: 0.75rem;
+      background: var(--ink);
+      color: var(--yellow);
+      font-size: clamp(1.75rem, 4vw, 3rem);
+    }
+
+    .polaroid h3 {
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.2em 0.8em;
+      border: 3px solid var(--green-deep);
+      border-radius: 999px;
+      background: var(--yellow);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .about {
+      max-width: 44rem;
+      text-align: center;
+      font-size: 1.15rem;
+    }
+
+    footer {
+      background: var(--green);
+      color: var(--white);
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 760px) {
+      .hero-inner,
+      .polaroid { grid-template-columns: 1fr; }
+      .hero-inner { text-align: center; }
+      .hero p { margin-inline: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="sky" aria-hidden="true">
+      <img class="cloud" src="assets/images/cloud.svg" alt="" style="top: 12%; width: 14rem; animation-duration: 80s; animation-delay: -15s">
+      <img class="cloud" src="assets/images/cloud.svg" alt="" style="top: 40%; width: 9rem; animation-duration: 60s; animation-delay: -45s">
+      <img class="cloud" src="assets/images/cloud.svg" alt="" style="top: 58%; width: 18rem; animation-duration: 100s; animation-delay: -70s">
+    </div>
+
+    <nav>
+      <img src="assets/images/logo/Logo%20Green.png" alt="">
+      LocalHugDealer Studios
+      <a href="#games">Games</a>
+    </nav>
+
+    <div class="hero-inner">
+      <div>
+        <h1>Games made with <em>big hugs</em>.</h1>
+        <p>LocalHugDealer Studios is a small indie studio making games with a lot of heart.</p>
+        <a class="btn" href="#games">See our games</a>
+      </div>
+      <img class="hero-logo" src="assets/images/logo/logo.png" alt="The LocalHugDealer dragon waving from a cloud">
+    </div>
+
+    <div class="bank back" aria-hidden="true">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+    </div>
+    <div class="bank" aria-hidden="true">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+    </div>
+  </header>
+
+  <main>
+    <section id="games">
+      <h2>Our games</h2>
+      <a class="polaroid" href="games/enemy-no-1/">
+        <div class="polaroid-art pixel">Enemy No. 1</div>
+        <div>
+          <span class="tag">In development</span>
+          <h3>Enemy No. 1</h3>
+          <p>A short pitch for Enemy No. 1 goes here.</p>
+        </div>
+      </a>
+    </section>
+
+    <section class="about">
+      <h2>About us</h2>
+      <p>A few lines about LocalHugDealer Studios go here.</p>
+    </section>
+  </main>
+
+  <footer>&copy; 2026 LocalHugDealer Studios</footer>
+</body>
+</html>
