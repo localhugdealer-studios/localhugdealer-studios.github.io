@@ -13,7 +13,7 @@
 
     .hero {
       position: relative;
-      background: linear-gradient(180deg, var(--green) 25%, var(--mint) 100%);
+      background: linear-gradient(180deg, var(--green) 20%, var(--mint) 65%, var(--white) 100%);
       color: var(--white);
       padding-bottom: calc(5vw + 2rem);
     }
@@ -99,7 +99,7 @@
       animation: bob 6s ease-in-out infinite;
     }
 
-    /* A single cloud bank straddling the bottom edge of the hero. Clouds keep a minimum width, so narrow screens show fewer. */
+    /* A single cloud bank straddling the bottom edge of the hero. Narrow screens show half the clouds so each stays readable. */
     .bank {
       position: absolute;
       top: 100%;
@@ -107,20 +107,24 @@
       right: 0;
       display: flex;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      justify-content: space-evenly;
+      overflow-x: clip;
       transform: translateY(-50%);
     }
 
     .bank .cloud {
       position: static;
-      flex: 1 0 10rem;
-      margin: 0 -2%;
+      width: clamp(7rem, 15vw, 16rem);
     }
 
-    .bank .cloud:nth-child(even) {
-      transform: scaleX(-1) scale(0.85);
+    @media (max-width: 40rem) {
+      .bank .cloud:nth-child(n+4) { display: none; }
     }
+
+    /* Vary size, height and direction so the row reads as a loose bank, not a fence. */
+    .bank .cloud:nth-child(2) { transform: translateY(-30%) scaleX(-1) scale(0.8); }
+    .bank .cloud:nth-child(3) { transform: scale(1.15); }
+    .bank .cloud:nth-child(4) { transform: translateY(20%) scaleX(-1) scale(0.9); }
 
     section {
       max-width: 72rem;
@@ -136,7 +140,7 @@
     }
 
     #games {
-      padding-top: calc(5vw + 3rem);
+      padding-top: calc(5vw + 1rem);
     }
 
     .polaroid {
@@ -231,9 +235,6 @@
     </div>
 
     <div class="bank" aria-hidden="true">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
       <img class="cloud" src="assets/images/cloud.svg" alt="">
       <img class="cloud" src="assets/images/cloud.svg" alt="">
       <img class="cloud" src="assets/images/cloud.svg" alt="">
