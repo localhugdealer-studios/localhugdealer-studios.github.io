@@ -15,7 +15,7 @@
       position: relative;
       background: linear-gradient(180deg, var(--green) 25%, var(--mint) 100%);
       color: var(--white);
-      padding-bottom: calc(16vw + 2rem);
+      padding-bottom: calc(5vw + 2rem);
     }
 
     /* Faint clouds drifting behind the hero content. */
@@ -99,7 +99,7 @@
       animation: bob 6s ease-in-out infinite;
     }
 
-    /* Cloud banks straddling the bottom edge of the hero. The back row sits higher and is softer. */
+    /* A single cloud bank straddling the bottom edge of the hero. Clouds keep a minimum width, so narrow screens show fewer. */
     .bank {
       position: absolute;
       top: 100%;
@@ -107,28 +107,19 @@
       right: 0;
       display: flex;
       align-items: center;
+      justify-content: center;
       overflow: hidden;
       transform: translateY(-50%);
     }
 
     .bank .cloud {
       position: static;
-      flex: 1 1 0;
-      min-width: 0;
-      margin: 0 -4%;
+      flex: 1 0 10rem;
+      margin: 0 -2%;
     }
 
     .bank .cloud:nth-child(even) {
       transform: scaleX(-1) scale(0.85);
-    }
-
-    .bank.back {
-      transform: translateY(-95%);
-      opacity: 0.6;
-    }
-
-    .bank.back .cloud {
-      margin: 0 -6%;
     }
 
     section {
@@ -145,7 +136,7 @@
     }
 
     #games {
-      padding-top: calc(8vw + 3rem);
+      padding-top: calc(5vw + 3rem);
     }
 
     .polaroid {
@@ -239,13 +230,10 @@
       <img class="hero-logo" src="assets/images/logo/logo.png" alt="The LocalHugDealer dragon waving from a cloud">
     </div>
 
-    <div class="bank back" aria-hidden="true">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-    </div>
     <div class="bank" aria-hidden="true">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
+      <img class="cloud" src="assets/images/cloud.svg" alt="">
       <img class="cloud" src="assets/images/cloud.svg" alt="">
       <img class="cloud" src="assets/images/cloud.svg" alt="">
       <img class="cloud" src="assets/images/cloud.svg" alt="">
