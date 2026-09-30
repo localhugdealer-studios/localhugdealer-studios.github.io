@@ -6,7 +6,7 @@
   <title>LocalHugDealer Studios</title>
   <link rel="stylesheet" href="assets/css/base.css">
   <style>
-    /* Variant D: C's nav, headline and game card on B's green hero, which fades into a cloud bank. */
+    /* Variant D: C's nav, headline and game card on B's green hero, which fades into white. */
     body {
       overflow-x: hidden;
     }
@@ -81,7 +81,7 @@
 
     .hero h1 em {
       font-style: normal;
-      color: var(--cream);
+      color: var(--tan);
     }
 
     .hero p {
@@ -98,33 +98,6 @@
     .hero-logo {
       animation: bob 6s ease-in-out infinite;
     }
-
-    /* A single cloud bank straddling the bottom edge of the hero. Narrow screens show half the clouds so each stays readable. */
-    .bank {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      overflow-x: clip;
-      transform: translateY(-50%);
-    }
-
-    .bank .cloud {
-      position: static;
-      width: clamp(7rem, 15vw, 16rem);
-    }
-
-    @media (max-width: 40rem) {
-      .bank .cloud:nth-child(n+4) { display: none; }
-    }
-
-    /* Vary size, height and direction so the row reads as a loose bank, not a fence. */
-    .bank .cloud:nth-child(2) { transform: translateY(-30%) scaleX(-1) scale(0.8); }
-    .bank .cloud:nth-child(3) { transform: scale(1.15); }
-    .bank .cloud:nth-child(4) { transform: translateY(20%) scaleX(-1) scale(0.9); }
 
     section {
       max-width: 72rem;
@@ -234,13 +207,6 @@
       <img class="hero-logo" src="assets/images/logo/logo.png" alt="The LocalHugDealer dragon waving from a cloud">
     </div>
 
-    <div class="bank" aria-hidden="true">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-      <img class="cloud" src="assets/images/cloud.svg" alt="">
-    </div>
   </header>
 
   <main>
