@@ -262,8 +262,30 @@
       margin-top: 1rem;
     }
 
+    /* The first column is wider so the longest card there sits level with its neighbours. */
+    .grid-3 {
+      grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+    }
+
     .grid-4 {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* A feature with a clip takes a full row: copy on the left, centred against the clip. */
+    .feature.wide {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .feature.wide .panel {
+      margin-top: 0;
+    }
+
+    .nowrap {
+      white-space: nowrap;
     }
 
     .feature {
@@ -279,6 +301,7 @@
       font: 700 1.2rem/1.2 var(--subhead);
       letter-spacing: 0.14em;
       text-transform: uppercase;
+      text-wrap: pretty;
     }
 
     .feature p {
@@ -305,7 +328,30 @@
       color: var(--cabinet);
     }
 
+    @media (max-width: 900px) {
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .feature.wide {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      /* The first text card after a wide one takes the full row, so the other two pair up. */
+      .feature.wide + .feature {
+        grid-column: 1 / -1;
+      }
+    }
+
     @media (max-width: 760px) {
+      .feature.wide {
+        display: block;
+      }
+
+      .feature.wide .panel {
+        margin-top: 1rem;
+      }
+
       .hero {
         align-items: flex-end;
         padding-bottom: 3rem;
@@ -410,10 +456,12 @@
 
     <section id="runs">
       <h2>A different number every run</h2>
-      <div class="grid">
-        <article class="feature">
-          <h3>55+ stacking pickups</h3>
-          <p>In four rarities. Chain Rule arcs lightning between enemies. Corollary turns kills into homing darts. Inverse Function brings you back from the dead, once.</p>
+      <div class="grid grid-3">
+        <article class="feature wide">
+          <div class="copy">
+            <h3>55+ stacking pickups</h3>
+            <p>In four rarities. Chain Rule arcs lightning between enemies. Corollary turns kills into homing darts. Inverse Function brings you back from the dead, once.</p>
+          </div>
           <figure class="panel">
             <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-06-build-poster.jpg" aria-label="A late run build going off, Chain Rule lightning, Corollary darts, a full HUD icon bar">
               <source src="gifs/enemy-no-1-clip-06-build.webm" type="video/webm">
@@ -423,7 +471,7 @@
         </article>
         <article class="feature">
           <h3>A dozen+ weapons</h3>
-          <p>Every one a math pun. Primaries like The Common Denominator, Long Division and Pi-stol fire from every node. Secondaries like Null Set, BODMAS and the Factorializer fire from the root, with limited ammo.</p>
+          <p>Every one a math pun. Primaries like The Common Denominator, Long Division and <span class="nowrap">Pi-stol</span> fire from every node. Secondaries like Null Set, BODMAS and the Factorializer fire from the root, with limited ammo.</p>
         </article>
         <article class="feature">
           <h3>10+ arena shapes</h3>
@@ -433,9 +481,11 @@
           <h3>Elites with their own tricks</h3>
           <p>The Unitarians hunt in packs. Primadonnas sprint at you the moment their shield breaks.</p>
         </article>
-        <article class="feature">
-          <h3>Knock the 1 out of an enemy's number and it switches sides</h3>
-          <p>The Square Rootcket does it to everything in its blast.</p>
+        <article class="feature wide">
+          <div class="copy">
+            <h3>Knock the 1 out of an enemy's number and it switches sides</h3>
+            <p>The Square Rootcket does it to everything in its blast.</p>
+          </div>
           <figure class="panel">
             <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-07-switches-sides-poster.jpg" aria-label="A Square Rootcket blast, enemies coming out green and turning on the swarm">
               <source src="gifs/enemy-no-1-clip-07-switches-sides.webm" type="video/webm">
