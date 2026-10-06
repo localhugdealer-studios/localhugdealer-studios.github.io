@@ -22,6 +22,18 @@ The site will be published on GitHub (GitHub Pages). It is plain static HTML and
 
 Git does not track empty directories, so the `games/enemy-no-1/` subfolders only appear in the repo once they contain files.
 
+## Enemy No. 1 sources
+
+The game's material lives outside this repo. Read from these folders, then copy what a page needs into `games/enemy-no-1/`. Never link to them from the site.
+
+- `C:\Users\lacra\OneDrive\1 Projects\Enemy No 1`: everything that isn't code (marketing, builds, music, recordings). Its own `CLAUDE.md` maps the folders. Key places:
+  - `Marketing/docs/`: the marketing pack. Start with its `README.md`. This is the source of truth for game page text.
+  - `Marketing/assets/`: current key art, lockups, icon, comic panels, animated title card. `assets/archive/` holds superseded art, so skip it.
+  - `Marketing/Press Kit/`: exported `Fonts`, `Gifs`, `Images`, `Logos`, `Videos`. Pull site assets from here first.
+  - `Marketing/Enemy No. 1 Trailer/`: the trailer video.
+  - `Marketing/archive/` and `Archive/`: out of date. Never use them as a source.
+- `D:\Godot Projects\enemy-no-1`: the Godot project (source code and in-game assets). It has its own `CLAUDE.md`. Design notes are in `docs/notes/`, and `docs/itch_io_page.html` is the current itch.io page. Treat it as read only from this repo.
+
 ## Colour palette
 
 The brand colours are a subset of the AAP-64 palette. `colour_palette.png` is the source of truth. Its colours, row by row:

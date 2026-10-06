@@ -13,360 +13,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="images/icon.png">
   <link rel="stylesheet" href="../../assets/css/base.css">
-  <style>
-    /* Look and palette come from the game's brand guide, not the studio palette. */
-    @font-face {
-      font-family: "Rubik Mono One";
-      src: url("font/RubikMonoOne-Regular.ttf") format("truetype");
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "Chakra Petch";
-      src: url("font/ChakraPetch-SemiBold.ttf") format("truetype");
-      font-weight: 600;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "Chakra Petch";
-      src: url("font/ChakraPetch-Bold.ttf") format("truetype");
-      font-weight: 700;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "IBM Plex Mono";
-      src: url("font/IBMPlexMono-Regular.ttf") format("truetype");
-      font-weight: 400;
-      font-display: swap;
-    }
-
-    /* base.css already declares the regular weight. */
-    @font-face {
-      font-family: "Silkscreen";
-      src: url("font/Silkscreen-Bold.ttf") format("truetype");
-      font-weight: 700;
-      font-display: swap;
-    }
-
-    :root {
-      --void: #05050a;
-      --floor: #0d0d11;
-      --lit: #12131a;
-      --bulkhead: #2a3140;
-      --grey: #6f7886;
-      --chalk: #e8eef7;
-      --cabinet: #00e676;
-      --cyan: #00e5ff;
-      --joystick: #ff3d00;
-      --orange: #ff9100;
-      --score: #ffea00;
-
-      --display: "Rubik Mono One", "Arial Black", Impact, sans-serif;
-      --subhead: "Chakra Petch", "Bahnschrift", sans-serif;
-      --pixel: "Silkscreen", "Courier New", monospace;
-      --body: "IBM Plex Mono", Consolas, "Courier New", monospace;
-    }
-
-    body {
-      background: var(--void);
-      color: var(--chalk);
-      font-family: var(--body);
-    }
-
-    /* CRT scanlines, kept under 3 percent. */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      pointer-events: none;
-      background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(232, 238, 247, 0.025) 3px 4px);
-    }
-
-    .shell {
-      width: min(72rem, calc(100% - 3rem));
-      margin: 0 auto;
-    }
-
-    .kicker {
-      margin: 0 0 1rem;
-      color: var(--cabinet);
-      font: 700 16px/1 var(--pixel);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .sub {
-      max-width: 36rem;
-      margin: 0;
-      font: 600 clamp(1.1rem, 1.8vw, 1.4rem)/1.35 var(--subhead);
-    }
-
-    /* Top bar */
-    .topbar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 2;
-    }
-
-    .topbar .shell {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.25rem 0;
-      font: 600 0.85rem/1 var(--subhead);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .topbar a {
-      color: var(--grey);
-      text-decoration: none;
-    }
-
-    .topbar a:hover {
-      color: var(--cabinet);
-    }
-
-    /* Hero */
-    .hero {
-      position: relative;
-      min-height: min(100vh, 60rem);
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      border-bottom: 1px solid rgba(0, 230, 118, 0.25);
-      isolation: isolate;
-    }
-
-    .hero-art {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 70% center;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background:
-        linear-gradient(90deg, rgba(5, 5, 10, 0.95) 0%, rgba(5, 5, 10, 0.7) 38%, transparent 70%),
-        linear-gradient(0deg, var(--void), transparent 30%);
-    }
-
-    .hero h1 {
-      margin: 0 0 1.5rem;
-      font: 400 clamp(3.25rem, 9vw, 8.5rem)/0.9 var(--display);
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      text-shadow: 0 0.3rem 2rem rgba(5, 5, 10, 0.9);
-    }
-
-    /* Matches the key art: the ".1" stays chalk white and picks up the fire glow. */
-    .hero h1 span {
-      text-shadow:
-        0.03em 0.03em 0.12em rgba(255, 145, 0, 0.7),
-        0 0 0.45em rgba(255, 61, 0, 0.55);
-    }
-
-    .hero .sub {
-      color: var(--score);
-    }
-
-    .coming-soon {
-      margin: 2.5rem 0 0;
-      color: var(--cabinet);
-      font: 700 16px/1 var(--pixel);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .coming-soon::before {
-      content: "\25A0\00A0";
-    }
-
-    /* Sections */
-    section {
-      padding: 6rem 0 0;
-    }
-
-    section h2 {
-      margin: 0 0 2.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(0, 230, 118, 0.2);
-      color: var(--cabinet);
-      font: 600 clamp(1.6rem, 4vw, 2.6rem)/1.1 var(--subhead);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    section p {
-      max-width: 44rem;
-      margin: 0 0 1.25rem;
-      font-size: 1.1rem;
-    }
-
-    .list {
-      max-width: 44rem;
-      margin: 0;
-      padding-left: 1.25rem;
-      font-size: 1.1rem;
-    }
-
-    .list li {
-      margin-bottom: 0.75rem;
-    }
-
-    .list li::marker {
-      color: var(--cyan);
-    }
-
-    .panel {
-      margin: 0;
-      border: 1px solid rgba(232, 238, 247, 0.1);
-      background: var(--lit);
-    }
-
-    .panel img,
-    .panel video,
-    .panel iframe {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      border: 0;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-    }
-
-    .panel + .grid,
-    .grid + p {
-      margin-top: 1.25rem;
-    }
-
-    .feature .panel,
-    .list .panel {
-      margin-top: 1rem;
-    }
-
-    /* The first column is wider so the longest card there sits level with its neighbours. */
-    .grid-3 {
-      grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
-    }
-
-    .grid-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    /* A feature with a clip takes a full row: copy on the left, centred against the clip. */
-    .feature.wide {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-      align-items: center;
-      gap: 1.75rem;
-    }
-
-    .feature.wide .panel {
-      margin-top: 0;
-    }
-
-    .nowrap {
-      white-space: nowrap;
-    }
-
-    .feature {
-      padding: 1.75rem;
-      border: 1px solid rgba(232, 238, 247, 0.1);
-      border-left: 3px solid var(--joystick);
-      background: var(--lit);
-    }
-
-    .feature h3 {
-      margin: 0 0 0.75rem;
-      color: var(--chalk);
-      font: 700 1.2rem/1.2 var(--subhead);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-wrap: pretty;
-    }
-
-    .feature p {
-      margin: 0;
-      color: var(--chalk);
-    }
-
-    footer {
-      margin-top: 6rem;
-      padding: 2rem 0;
-      border-top: 1px solid rgba(0, 230, 118, 0.2);
-      color: var(--grey);
-      font-size: 0.9rem;
-    }
-
-    footer .shell {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    footer a:hover {
-      color: var(--cabinet);
-    }
-
-    @media (max-width: 900px) {
-      .grid-3 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .feature.wide {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      /* The first text card after a wide one takes the full row, so the other two pair up. */
-      .feature.wide + .feature {
-        grid-column: 1 / -1;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .feature.wide {
-        display: block;
-      }
-
-      .feature.wide .panel {
-        margin-top: 1rem;
-      }
-
-      .hero {
-        align-items: flex-end;
-        padding-bottom: 3rem;
-      }
-
-      .hero::before {
-        background: linear-gradient(0deg, var(--void) 10%, rgba(5, 5, 10, 0.6) 60%, rgba(5, 5, 10, 0.2));
-      }
-
-      .grid,
-      .grid-4 {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="hero">
@@ -407,10 +54,12 @@
     </section>
 
     <!-- Copy mirrors the About This Game body in the Store Page Brief. Edit it there first. -->
-    <section id="about">
+    <section id="about" class="story">
       <h2>Prepare to be outnumbered.</h2>
-      <p>Enemy No. 1 is a twin-stick action roguelite set on the number line. It takes its escalating runs from Risk of Rain and its eat, grow and split mechanics from agar.io.</p>
-      <p>Your number is your health, your size and your damage. Shoot numbers, collect what they drop and watch your number climb. A bigger number hits harder and has more to lose.</p>
+      <div class="copy">
+        <p>Enemy No. 1 is a twin-stick action roguelite set on the number line. It takes its escalating runs from Risk of Rain and its eat, grow and split mechanics from agar.io.</p>
+        <p>Your number is your health, your size and your damage. Shoot numbers, collect what they drop and watch your number climb. A bigger number hits harder and has more to lose.</p>
+      </div>
       <figure class="panel">
         <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-01-outnumbered-poster.jpg" aria-label="The cluster sweeping up drops, its number ticking up and its body swelling">
           <source src="gifs/enemy-no-1-clip-01-outnumbered.webm" type="video/webm">
@@ -419,10 +68,12 @@
       </figure>
     </section>
 
-    <section id="problem">
+    <section id="problem" class="story">
       <h2>You have 1 problem</h2>
-      <p>Numero Uno, in his attempt to become | Absolute |, has caged Zero and corrupted every number with a 1 in it. Get to him, free Zero and put the number line back in balance.</p>
-      <p>Every pickup changes your number, and any part of you with a 1 in it stops healing.</p>
+      <div class="copy">
+        <p>Numero Uno, in his attempt to become | Absolute |, has caged Zero and corrupted every number with a 1 in it. Get to him, free Zero and put the number line back in balance.</p>
+        <p>Every pickup changes your number, and any part of you with a 1 in it stops healing.</p>
+      </div>
       <figure class="panel">
         <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-02-one-problem-poster.jpg" aria-label="A pickup tips a node onto a number with a 1, it goes orchid and stops healing, then the next pickup knocks the 1 back out">
           <source src="gifs/enemy-no-1-clip-02-one-problem.webm" type="video/webm">
@@ -431,10 +82,12 @@
       </figure>
     </section>
 
-    <section id="split">
+    <section id="split" class="story">
       <h2>Split for firepower. Merge to survive.</h2>
-      <p>You are a cluster of nodes, and your primary weapon fires from every one of them. Split and you have more guns on smaller, more fragile bodies. Merge back up when you need to take a hit.</p>
-      <p>It is also how you deal with a 1. 100 splits into a 55 and a 45, and both of them heal and shoot.</p>
+      <div class="copy">
+        <p>You are a cluster of nodes, and your primary weapon fires from every one of them. Split and you have more guns on smaller, more fragile bodies. Merge back up when you need to take a hit.</p>
+        <p>It is also how you deal with a 1. 100 splits into a 55 and a 45, and both of them heal and shoot.</p>
+      </div>
       <figure class="panel">
         <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-03-split-merge-poster.jpg" aria-label="An orchid 100 divides into a cyan 55 and 45, the cluster fans out firing from every node, then merges back">
           <source src="gifs/enemy-no-1-clip-03-split-merge.webm" type="video/webm">
@@ -443,9 +96,11 @@
       </figure>
     </section>
 
-    <section id="clock">
+    <section id="clock" class="story">
       <h2>The clock is not on your side</h2>
-      <p>The swarm grows with every minute you spend and every stage you clear. Each stage takes you closer to defeating Numero Uno. Alternatively, continue playing the game in endless mode to challenge yourself against the clock.</p>
+      <div class="copy">
+        <p>The swarm grows with every minute you spend and every stage you clear. Each stage takes you closer to defeating Numero Uno. Alternatively, continue playing the game in endless mode to challenge yourself against the clock.</p>
+      </div>
       <figure class="panel">
         <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-04-clock-poster.jpg" aria-label="One arena from early to late, sped up, the swarm thickening until the screen is full">
           <source src="gifs/enemy-no-1-clip-04-clock.webm" type="video/webm">
@@ -496,9 +151,11 @@
       </div>
     </section>
 
-    <section id="guardians">
+    <section id="guardians" class="story">
       <h2>Find the portal and defeat the stage guardians</h2>
-      <p>Every guardian you beat brings you closer to defeating Numero Uno.</p>
+      <div class="copy">
+        <p>Every guardian you beat brings you closer to defeating Numero Uno.</p>
+      </div>
       <figure class="panel">
         <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-05-twin-primes-poster.jpg" aria-label="Twin Primes on their tether, kill one and the other goes berserk">
           <source src="gifs/enemy-no-1-clip-05-twin-primes.webm" type="video/webm">
@@ -507,9 +164,11 @@
       </figure>
     </section>
 
-    <section id="between-runs">
+    <section id="between-runs" class="story">
       <h2>Between runs</h2>
-      <p>Imaginary numbers drop during runs, more often on the harder difficulties, and the Report Card (achievements) pays out more. Spend them on the (skill) Tree Diagram and new weapons.</p>
+      <div class="copy">
+        <p>Imaginary numbers drop during runs, more often on the harder difficulties, and the Report Card (achievements) pays out more. Spend them on the (skill) Tree Diagram and new weapons.</p>
+      </div>
       <figure class="panel">
         <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-09-tree-diagram-poster.jpg" aria-label="The Tree Diagram">
           <source src="gifs/enemy-no-1-clip-09-tree-diagram.webm" type="video/webm">
@@ -518,26 +177,25 @@
       </figure>
     </section>
 
-    <section id="syllabus">
+    <section id="syllabus" class="story">
       <h2>Also on the syllabus</h2>
-      <ul class="list">
+      <ul class="list copy">
         <li>Puzzle sites that pay out artifacts with bigger bonuses</li>
         <li>The (skill) Tree Diagram, 50+ nodes with free respecs.</li>
         <li>The Report Card, 40+ achievements to take home.</li>
         <li>The Log(book), 130+ entries on every weapon, pickup and enemy you meet.</li>
-        <li>A shop called The Absolute Value. Pay the Altar of Operations and its gate is guaranteed.
-          <figure class="panel">
-            <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-08-absolute-value-poster.jpg" aria-label="Walking up to the counter short and getting COME BACK WHEN YOUR NUMBER IS BIGGER">
-              <source src="gifs/enemy-no-1-clip-08-absolute-value.webm" type="video/webm">
-              <source src="gifs/enemy-no-1-clip-08-absolute-value.mp4" type="video/mp4">
-            </video>
-          </figure>
-        </li>
+        <li>A shop called The Absolute Value. Pay the Altar of Operations and its gate is guaranteed.</li>
         <li>Four difficulties: Rational, Irrational, Imaginary and Undefined.</li>
         <li>Neon vector art on a CRT, and 10+ custom tracks to go with it.</li>
         <li>Keyboard and mouse, or gamepad.</li>
         <li>Stages of about 3 to 5 minutes each. 20 minutes to reach Numero Uno.</li>
       </ul>
+      <figure class="panel">
+        <video class="clip" muted loop playsinline preload="none" poster="gifs/enemy-no-1-clip-08-absolute-value-poster.jpg" aria-label="Walking up to the counter short and getting COME BACK WHEN YOUR NUMBER IS BIGGER">
+          <source src="gifs/enemy-no-1-clip-08-absolute-value.webm" type="video/webm">
+          <source src="gifs/enemy-no-1-clip-08-absolute-value.mp4" type="video/mp4">
+        </video>
+      </figure>
     </section>
 
     <section id="steam">
@@ -549,30 +207,11 @@
   <footer>
     <div class="shell">
       <span>&copy; 2026 LocalHugDealer Studios</span>
+      <a href="press/index.html">Press kit</a>
       <a href="../../index.html">More from LocalHugDealer Studios</a>
     </div>
   </footer>
 
-  <script>
-    // Clips play like GIFs, but only load and play while on screen.
-    const clips = document.querySelectorAll(".clip");
-    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-      clips.forEach((clip) => clip.setAttribute("controls", ""));
-    } else {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(({ target, isIntersecting }) => {
-          if (isIntersecting) {
-            target.play().catch(() => target.setAttribute("controls", ""));
-          } else {
-            target.pause();
-          }
-        });
-      }, { threshold: 0.25 });
-
-      clips.forEach((clip) => observer.observe(clip));
-    }
-  </script>
+  <script src="clips.js"></script>
 </body>
 </html>

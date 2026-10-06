@@ -1,0 +1,384 @@
+/* Look and palette come from the game's brand guide, not the studio palette. */
+@font-face {
+  font-family: "Rubik Mono One";
+  src: url("font/RubikMonoOne-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Chakra Petch";
+  src: url("font/ChakraPetch-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Chakra Petch";
+  src: url("font/ChakraPetch-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("font/IBMPlexMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* base.css already declares the regular weight. */
+@font-face {
+  font-family: "Silkscreen";
+  src: url("font/Silkscreen-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --void: #05050a;
+  --floor: #0d0d11;
+  --lit: #12131a;
+  --bulkhead: #2a3140;
+  --grey: #6f7886;
+  --chalk: #e8eef7;
+  --cabinet: #00e676;
+  --cyan: #00e5ff;
+  --joystick: #ff3d00;
+  --orange: #ff9100;
+  --score: #ffea00;
+
+  --display: "Rubik Mono One", "Arial Black", Impact, sans-serif;
+  --subhead: "Chakra Petch", "Bahnschrift", sans-serif;
+  --pixel: "Silkscreen", "Courier New", monospace;
+  --body: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+
+body {
+  background: var(--void);
+  color: var(--chalk);
+  font-family: var(--body);
+}
+
+/* CRT scanlines, kept under 3 percent. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(232, 238, 247, 0.025) 3px 4px);
+}
+
+.shell {
+  width: min(72rem, calc(100% - 3rem));
+  margin: 0 auto;
+}
+
+.kicker {
+  margin: 0 0 1rem;
+  color: var(--cabinet);
+  font: 700 16px/1 var(--pixel);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sub {
+  max-width: 36rem;
+  margin: 0;
+  font: 600 clamp(1.1rem, 1.8vw, 1.4rem)/1.35 var(--subhead);
+}
+
+/* Top bar */
+.topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.topbar .shell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  font: 600 0.85rem/1.2 var(--subhead);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.topbar a {
+  color: var(--grey);
+  text-decoration: none;
+}
+
+.topbar a,
+footer a {
+  display: inline-block;
+  padding-block: 0.5rem;
+}
+
+.topbar a:is(:hover, :focus-visible),
+footer a:is(:hover, :focus-visible) {
+  color: var(--cabinet);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: min(100vh, 60rem);
+  min-height: min(100svh, 60rem);
+  padding-top: 4.5rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 230, 118, 0.25);
+  isolation: isolate;
+}
+
+.hero-art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 10, 0.95) 0%, rgba(5, 5, 10, 0.7) 38%, transparent 70%),
+    linear-gradient(0deg, var(--void), transparent 30%);
+}
+
+.hero h1 {
+  margin: 0 0 1.5rem;
+  font: 400 clamp(3.25rem, 9vw, 8.5rem)/0.9 var(--display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 0.3rem 2rem rgba(5, 5, 10, 0.9);
+}
+
+/* Matches the key art: the ".1" stays chalk white and picks up the fire glow. */
+.hero h1 span {
+  text-shadow:
+    0.03em 0.03em 0.12em rgba(255, 145, 0, 0.7),
+    0 0 0.45em rgba(255, 61, 0, 0.55);
+}
+
+.hero .sub {
+  color: var(--score);
+}
+
+.hero .coming-soon {
+  margin-top: 2.5rem;
+}
+
+.coming-soon {
+  margin: 0;
+  color: var(--cabinet);
+  font: 700 16px/1 var(--pixel);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.coming-soon::before {
+  content: "\25A0\00A0";
+}
+
+/* Sections */
+section {
+  padding: 6rem 0 0;
+}
+
+section h2 {
+  margin: 0 0 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 230, 118, 0.2);
+  color: var(--cabinet);
+  font: 600 clamp(1.6rem, 4vw, 2.6rem)/1.1 var(--subhead);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+section p {
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+}
+
+.list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 1.1rem;
+}
+
+.list li {
+  margin-bottom: 0.75rem;
+}
+
+.list li::marker {
+  color: var(--cyan);
+}
+
+.panel {
+  margin: 0;
+  border: 1px solid rgba(232, 238, 247, 0.1);
+  background: var(--lit);
+}
+
+.panel img,
+.panel video,
+.panel iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.panel + .grid {
+  margin-top: 1.25rem;
+}
+
+/* The first column is wider so the longest card there sits level with its neighbours. */
+.grid-3 {
+  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Copy on the left, centred against its clip. Story sections and wide features share this. */
+.story,
+.feature.wide {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  align-items: center;
+  gap: 0 1.75rem;
+}
+
+.story h2 {
+  grid-column: 1 / -1;
+}
+
+.story .copy > :last-child {
+  margin-bottom: 0;
+}
+
+/* A feature with a clip takes a full row. */
+.feature.wide {
+  grid-column: 1 / -1;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.feature {
+  padding: 1.75rem;
+  border: 1px solid rgba(232, 238, 247, 0.1);
+  border-left: 3px solid var(--joystick);
+  background: var(--lit);
+}
+
+.feature h3 {
+  margin: 0 0 0.75rem;
+  color: var(--chalk);
+  font: 700 1.2rem/1.2 var(--subhead);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-wrap: pretty;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--chalk);
+}
+
+footer {
+  margin-top: 6rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(0, 230, 118, 0.2);
+  color: var(--grey);
+  font-size: 0.9rem;
+}
+
+footer .shell {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (max-width: 1100px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* The first text card after a wide one takes the full row, so the other two pair up. */
+  .feature.wide + .feature {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .story,
+  .feature.wide {
+    display: block;
+  }
+
+  /* Stacked clips sit one paragraph gap under their copy. */
+  .story .panel,
+  .feature.wide .panel {
+    margin-top: 1.25rem;
+  }
+}
+
+@media (max-width: 760px) {
+  section {
+    padding-top: 4rem;
+  }
+
+  footer {
+    margin-top: 4rem;
+  }
+
+  .feature {
+    padding: 1.25rem;
+  }
+
+  section p,
+  .list {
+    font-size: 1rem;
+  }
+
+  .hero {
+    align-items: flex-end;
+    padding-bottom: 3rem;
+  }
+
+  .hero::before {
+    background: linear-gradient(0deg, var(--void) 10%, rgba(5, 5, 10, 0.6) 60%, rgba(5, 5, 10, 0.2));
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
