@@ -192,6 +192,16 @@ footer a:is(:hover, :focus-visible) {
   content: "\25A0\00A0";
 }
 
+/* itch.io embed: fixed 167px tall, shrinks to fit narrow screens */
+.itch-widget {
+  display: block;
+  width: 100%;
+  max-width: 552px;
+  height: 167px;
+  margin-top: 1.5rem;
+  border: 0;
+}
+
 /* Sections */
 section {
   padding: 6rem 0 0;
