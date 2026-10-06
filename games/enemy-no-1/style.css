@@ -176,28 +176,58 @@ footer a:is(:hover, :focus-visible) {
   color: var(--score);
 }
 
-.hero .coming-soon {
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
   margin-top: 2.5rem;
 }
 
-.coming-soon {
+/* Buttons: .coming-soon is the glowing primary (not a link until Steam is live), .btn-alt the outlined secondary */
+.coming-soon,
+.btn-alt {
+  display: inline-block;
   margin: 0;
-  color: var(--cabinet);
+  padding: 0.9em 1.4em;
+  border: 2px solid;
   font: 700 16px/1 var(--pixel);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  text-decoration: none;
+}
+
+.coming-soon {
+  color: var(--cabinet);
+  border-color: var(--cabinet);
+  background: color-mix(in srgb, var(--cabinet) 12%, transparent);
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--cabinet) 45%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--cabinet) 25%, transparent);
 }
 
 .coming-soon::before {
   content: "\25A0\00A0";
 }
 
-/* itch.io embed: fixed 167px tall, shrinks to fit narrow screens */
+.btn-alt {
+  color: var(--chalk);
+  border-color: var(--grey);
+  background: color-mix(in srgb, var(--void) 60%, transparent);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.btn-alt:is(:hover, :focus-visible) {
+  color: var(--cyan);
+  border-color: var(--cyan);
+}
+
+/* itch.io embed: fixed 165px tall, shrinks to fit narrow screens */
 .itch-widget {
   display: block;
   width: 100%;
-  max-width: 552px;
-  height: 167px;
+  max-width: 550px;
+  height: 165px;
   margin-top: 1.5rem;
   border: 0;
 }
