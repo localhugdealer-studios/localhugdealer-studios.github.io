@@ -222,16 +222,6 @@ footer a:is(:hover, :focus-visible) {
   border-color: var(--cyan);
 }
 
-/* itch.io embed: fixed 165px tall, shrinks to fit narrow screens */
-.itch-widget {
-  display: block;
-  width: 100%;
-  max-width: 550px;
-  height: 165px;
-  margin-top: 1.5rem;
-  border: 0;
-}
-
 /* Sections */
 section {
   padding: 6rem 0 0;
