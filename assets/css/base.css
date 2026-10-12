@@ -74,6 +74,33 @@ a {
   box-shadow: 0 3px 0 var(--green-deep);
 }
 
+/* Studio social links. The icons in assets/images/socials/ are white, so they suit any dark or green footer. */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socials a {
+  display: block;
+  padding: 0.5rem;
+  opacity: 0.8;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.socials a:is(:hover, :focus-visible) {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.socials img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .pixel {
   font-family: "Silkscreen", monospace;
 }
