@@ -1,0 +1,48 @@
+#!/bin/sh
+# Pre-commit hook: adds one to the patch number of the project version on every commit (0.1.4 to
+# 0.1.5) and stages the version file, so each commit carries its own build number. Major and minor
+# bumps are hand edits: a commit whose staged version differs from the last commit's keeps it as
+# written. Merge commits keep the version unchanged, and SKIP_VERSION_BUMP=1 skips the bump for one
+# commit. Git runs this hook once a clone points at its folder with `git config core.hooksPath`.
+
+# Where the version lives: the file (relative to the repo root) and the text either side of the
+# x.y.z number, as extended regular expressions. The first line that matches holds the version.
+version_file="VERSION"
+version_before='^'
+version_after=''
+
+number='[0-9]+\.[0-9]+\.[0-9]+'
+pattern="${version_before}${number}${version_after}"
+
+# Prints the version found in the text on stdin, or nothing.
+read_version() {
+	grep -E -m1 "$pattern" | grep -oE "$pattern" | grep -oE "$number" | head -1
+}
+
+[ "$SKIP_VERSION_BUMP" = "1" ] && exit 0
+[ -f "$(git rev-parse --git-path MERGE_HEAD)" ] && exit 0
+
+version=$(read_version 2>/dev/null < "$version_file")
+if [ -z "$version" ]; then
+	echo "pre-commit: no x.y.z version found in $version_file, commit left unversioned" >&2
+	exit 0
+fi
+
+# A staged version that differs from the last commit's (or is committed for the first time) is a
+# hand edit and stays as written.
+committed=$(git show "HEAD:$version_file" 2>/dev/null | read_version)
+staged=$(git show ":$version_file" 2>/dev/null | read_version)
+if [ -n "$staged" ] && [ "$staged" != "$committed" ]; then
+	exit 0
+fi
+
+major=${version%%.*}
+rest=${version#*.}
+minor=${rest%%.*}
+patch=${rest#*.}
+new_version="$major.$minor.$((patch + 1))"
+
+line=$(grep -nE -m1 "$pattern" "$version_file" | cut -d: -f1)
+escaped=$(printf '%s' "$version" | sed 's/\./\\./g')
+sed -i "${line}s/${escaped}/${new_version}/" "$version_file"
+git add "$version_file"
