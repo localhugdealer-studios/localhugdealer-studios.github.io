@@ -104,9 +104,22 @@
       max-width: 30rem;
     }
 
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
     .hero .btn {
       background: var(--amber);
       color: var(--ink);
+    }
+
+    /* Outlined so the amber button stays the main call to action. */
+    .hero .btn-secondary {
+      border-color: var(--white);
+      background: transparent;
+      color: var(--white);
     }
 
     .hero-logo {
@@ -229,7 +242,10 @@
       <div>
         <h1>Games made with <em>big hugs</em>.</h1>
         <p>LocalHugDealer Studios is a small indie studio making games with a lot of heart.</p>
-        <a class="btn" href="#games">See our games</a>
+        <div class="hero-actions">
+          <a class="btn" href="#games">See our games</a>
+          <a class="btn btn-secondary" href="https://discord.gg/bnQ6pyDz5p">Join our Discord</a>
+        </div>
       </div>
       <img class="hero-logo" src="assets/images/logo/logo.png" alt="The LocalHugDealer dragon waving from a cloud">
     </div>
