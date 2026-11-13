@@ -204,6 +204,90 @@
       border-radius: 50%;
     }
 
+    .newsletter {
+      max-width: 44rem;
+    }
+
+    .newsletter-card {
+      padding: 2.5rem 2rem;
+      text-align: center;
+      color: var(--white);
+      background: var(--green);
+      border: 5px solid var(--green-deep);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 0 var(--green-deep);
+    }
+
+    .newsletter-card h2 {
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .newsletter-card > p {
+      margin: 0 auto;
+      max-width: 32rem;
+    }
+
+    /* A plain POST to Kit, so the page loads no third-party script or cookies. */
+    .newsletter-form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 2rem 0 1.25rem;
+    }
+
+    .newsletter-form input {
+      flex: 1 1 16rem;
+      padding: 0.8em 1.4em;
+      border: 3px solid var(--green-deep);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .newsletter-form input:focus {
+      outline: 3px solid var(--yellow);
+      outline-offset: 2px;
+    }
+
+    .newsletter-card .btn {
+      background: var(--amber);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .newsletter-card .newsletter-note {
+      font-size: 0.9rem;
+    }
+
+    /* Kit redirects to #check-inbox after a signup and to #subscribed after the
+       confirmation link, so :target shows the matching popup without any script. */
+    .popup {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      place-items: center;
+      padding: 1.5rem;
+      background: color-mix(in srgb, var(--ink) 70%, transparent);
+    }
+
+    .popup:target {
+      display: grid;
+    }
+
+    .popup .newsletter-card {
+      max-width: 30rem;
+    }
+
+    .popup .btn {
+      margin-top: 1.5rem;
+    }
+
     footer {
       background: var(--green);
       color: var(--white);
@@ -270,6 +354,18 @@
       <img class="about-hero" src="assets/images/about-hero.jpg" alt="A young Llewellyn at the family computer">
       <p>LocalHugDealer Studios is me, Llewellyn Craddock, a solo developer in Muizenberg, Cape Town. The name started as a joke during the pandemic, when hugs were in short supply, and it stuck around long enough to become my gamer name. I make the kind of games I love playing: roguelites, automation and simulation, and anything where you get to craft, build or lead an army. I'm still working out exactly what that looks like, one game at a time.</p>
     </section>
+
+    <section class="newsletter" id="newsletter">
+      <div class="newsletter-card">
+        <h2>Join the newsletter</h2>
+        <p>Development updates on Enemy No. 1, early looks at new art and features, and first word on betas and releases.</p>
+        <form class="newsletter-form" action="https://app.kit.com/forms/10185136/subscriptions" method="post">
+          <input type="email" name="email_address" placeholder="Your email address" aria-label="Your email address" autocomplete="email" required>
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+        <p class="newsletter-note">No spam, just the occasional email when there's something worth sharing. Unsubscribe any time. See our <a href="privacy.html">privacy policy</a>.</p>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -280,5 +376,21 @@
     </ul>
     <p>&copy; 2026 LocalHugDealer Studios &middot; <a href="privacy.html">Privacy</a></p>
   </footer>
+
+  <div class="popup" id="check-inbox" role="dialog" aria-labelledby="check-inbox-title">
+    <div class="newsletter-card">
+      <h2 id="check-inbox-title">Check your inbox</h2>
+      <p>Almost there. I've sent you an email with a button to confirm your subscription. If it hasn't arrived in a few minutes, have a look in your spam folder.</p>
+      <a class="btn" href="#newsletter">Got it</a>
+    </div>
+  </div>
+
+  <div class="popup" id="subscribed" role="dialog" aria-labelledby="subscribed-title">
+    <div class="newsletter-card">
+      <h2 id="subscribed-title">You're subscribed</h2>
+      <p>Thanks for confirming. You'll hear from me when there's news on Enemy No. 1, early looks at new art and features, and first word on betas and releases.</p>
+      <a class="btn" href="#games">See our games</a>
+    </div>
+  </div>
 </body>
 </html>
