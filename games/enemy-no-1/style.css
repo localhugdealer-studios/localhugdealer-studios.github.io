@@ -208,20 +208,26 @@ footer a:is(:hover, :focus-visible) {
   color: var(--cabinet);
 }
 
+/* Store buttons are square icon tiles. The icon fills with currentColor, so it follows each state's colour. */
 .store {
-  display: inline-block;
-  padding: 0.8em 1.3em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
   border: 2px solid var(--cabinet);
   color: var(--cabinet);
   background: color-mix(in srgb, var(--cabinet) 12%, transparent);
   box-shadow:
     0 0 18px color-mix(in srgb, var(--cabinet) 45%, transparent),
     inset 0 0 12px color-mix(in srgb, var(--cabinet) 25%, transparent);
-  font: 700 16px/1 var(--pixel);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
   transition: color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.store .icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: currentColor;
 }
 
 a.store:is(:hover, :focus-visible) {
