@@ -69,6 +69,12 @@ body::before {
   background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(232, 238, 247, 0.025) 3px 4px);
 }
 
+/* The browser `[hidden]` rule only targets HTML elements, so the inline
+   icon sprite needs its own rule or it renders as a blank 300x150 box. */
+svg[hidden] {
+  display: none;
+}
+
 .shell {
   width: min(72rem, calc(100% - 3rem));
   margin: 0 auto;
@@ -108,20 +114,37 @@ body::before {
   text-transform: uppercase;
 }
 
-.topbar a {
-  color: var(--grey);
-  text-decoration: none;
-}
-
-.topbar a,
 footer a {
   display: inline-block;
   padding-block: 0.5rem;
 }
 
-.topbar a:is(:hover, :focus-visible),
 footer a:is(:hover, :focus-visible) {
   color: var(--cabinet);
+}
+
+/* Top bar links sit over bright key art, so each gets a dark pill and a text shadow to stay readable.
+   They share the store tiles' green outline and cyan hover glow. */
+.topbar a {
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--cabinet) 55%, transparent);
+  border-radius: 999px;
+  color: var(--chalk);
+  font-weight: 700;
+  text-decoration: none;
+  text-shadow: 0 1px 3px var(--void);
+  background: color-mix(in srgb, var(--void) 65%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--cabinet) 20%, transparent);
+  transition: color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.topbar a:is(:hover, :focus-visible) {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--cyan) 45%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--cyan) 25%, transparent);
 }
 
 /* Hero */
